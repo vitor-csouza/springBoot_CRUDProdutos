@@ -14,6 +14,9 @@ public class ProdutoRepository {
 	
 	private static final String GET_ALL = "SELECT * FROM TB_PRODUTO";
 	private static final String SAVE = "INSERT INTO TB_PRODUTO (NOME, SKU, DESCRICAO, PRECO, CARACTERISTICAS) VALUES (?, ?, ?, ?, ?)";
+	private static final String GET = "SELECT * FROM TB_PRODUTO WHERE ID=?";
+	private static final String UPDATE = "UPDATE TB_PRODUTO SET NOME=?, SKU=?, DESCRICAO=?, CARACTERISTICAS=?, PRECO=? WHERE ID=?";
+	private static final String DELETE = "DELETE FROM TB_PRODUTO WHERE ID=?";
 	
 	@Autowired
 	public JdbcTemplate jdbcTemplate;
@@ -24,25 +27,34 @@ public class ProdutoRepository {
 	
 	
 	public List<ProdutoModel> findAll() {
-		List<ProdutoModel> produtos = this.jdbcTemplate.query(GET_ALL, new BeanPropertyRowMapper<ProdutoModel>(ProdutoModel.class));
+		List<ProdutoModel> produtos = this.jdbcTemplate.query(GET_ALL, 
+				new BeanPropertyRowMapper<ProdutoModel>(ProdutoModel.class));
 		return produtos;
 	}
 	
 
 	public ProdutoModel findById(long id) {
-		return null;
+		ProdutoModel produto = this.jdbcTemplate.queryForObject(GET, 
+				new BeanPropertyRowMapper<ProdutoModel>(ProdutoModel.class), id);
+		return produto;
 	}
 
 	
 	public void update(ProdutoModel produtoModel) {
-		//produtos.put(produtoModel.getId(), produtoModel);
+		this.jdbcTemplate.update(UPDATE, 
+				produtoModel.getNome(), 
+				produtoModel.getSku(), 
+				produtoModel.getDescricao(), 
+				produtoModel.getCaracteristicas(), 
+				produtoModel.getPreco(),
+				produtoModel.getId());
 	}
 
 	public void save(ProdutoModel produtoModel) {
 		this.jdbcTemplate.update(SAVE, produtoModel.getNome(), produtoModel.getSku(), produtoModel.getDescricao(), produtoModel.getPreco(), produtoModel.getCaracteristicas());
 	}
 	public void deleteById(long id) {
-		//produtos.remove(id);
+		this.jdbcTemplate.update(DELETE, id);
 	}
 	
 }

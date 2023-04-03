@@ -21,6 +21,8 @@ import br.com.fiap.repository.ProdutoRepository;
 @Controller
 @RequestMapping("/produto")
 public class ProdutoController {
+	
+	private static final String PRODUTO_FOLDER = "produto/";
 
 	@Autowired
 	public ProdutoRepository repository;
@@ -28,13 +30,13 @@ public class ProdutoController {
 	@GetMapping()
 	public String findAll(Model model) {
 		model.addAttribute("produtos", repository.findAll());
-		return "produtos";
+		return PRODUTO_FOLDER + "produtos";
 	}
 
 	@GetMapping("/{id}")
 	public String findById(@PathVariable("id") long id, Model model) {
 		model.addAttribute("produto", repository.findById(id));
-		return "produto-detalhe";
+		return PRODUTO_FOLDER + "produto-detalhe";
 	}
 	
 	@GetMapping("/form")
@@ -42,14 +44,14 @@ public class ProdutoController {
 		if("produto-editar".equals(page)) {
 			model.addAttribute("produtoModel", repository.findById(id));
 		}
-		return page;
+		return  PRODUTO_FOLDER +page;
 	}
 
 	@PostMapping()
 	public String save(@Valid ProdutoModel produto, BindingResult bindingResult, 
 			RedirectAttributes redirectAttributes) {
 		if(bindingResult.hasErrors()) {
-			return "produto-novo";
+			return PRODUTO_FOLDER + "produto-novo";
 		}
 		
 		repository.save(produto);
