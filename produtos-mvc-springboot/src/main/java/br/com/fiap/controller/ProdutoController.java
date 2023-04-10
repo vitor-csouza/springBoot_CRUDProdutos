@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.fiap.model.ProdutoModel;
+import br.com.fiap.repository.CategoriaRepository;
 import br.com.fiap.repository.ProdutoRepository;
 
 @Controller
@@ -26,6 +27,9 @@ public class ProdutoController {
 
 	@Autowired
 	public ProdutoRepository repository;
+	
+	@Autowired
+	public CategoriaRepository categoriaRepository;
 
 	@GetMapping()
 	public String findAll(Model model) {
@@ -44,6 +48,8 @@ public class ProdutoController {
 		if("produto-editar".equals(page)) {
 			model.addAttribute("produtoModel", repository.findById(id));
 		}
+		
+		model.addAttribute("categorias", categoriaRepository.findAll());
 		return  PRODUTO_FOLDER +page;
 	}
 
@@ -62,10 +68,12 @@ public class ProdutoController {
 	@PostMapping("/{id}")
 	public String update(@PathVariable("id") long id, Model model, @Valid ProdutoModel produtoModel, BindingResult bindingResult, 
 			RedirectAttributes redirectAttributes) {
+
 		produtoModel.setId(id);
+		
 		repository.update(produtoModel);
 		redirectAttributes.addFlashAttribute("messages","Produto atualizado com sucesso!");
-		model.addAttribute("produtos",repository.findAll());
+		model.addAttribute("produtos", repository.findAll());
 		return "redirect:/produto";
 	}
 	

@@ -56,6 +56,7 @@
 			    <tr>
 			      <th scope="col">Nome</th>
 			      <th scope="col">Preço</th>
+			      <th scope="col">Categoria</th>
 			      <th scope="col">Ações</th>
 			    </tr>
 			  </thead>
@@ -64,10 +65,11 @@
 				    <tr>
 				      <td>${produto.nome}</td>
 				      <td>${produto.preco}</td>
+				      <td>${produto.categoriaModel.nomeCategoria}</td>
 				      <td>
 				      	  <form:form action="${contextPath}/produto/${produto.id}" method="delete">
 					          <a href="${contextPath}/produto/${produto.id}"  class="btn btn-success btn-sm">Detalhes</a>
-						      <a href="${contextPath}/produto/form?page=produto-editar&id=${produto.id}"  class="btn btn-warning btn-sm">Editar</a>
+						      <a href="${contextPath}/produto/form?page=produto-editar&id=${produto.id}" class="btn btn-warning btn-sm">Editar</a>
 						      <input type="submit" value="Excluir" class="btn btn-danger btn-sm">
 						  </form:form>
 					  </td>

@@ -59,24 +59,30 @@
 							
 							<div class="form-group">
 								<label class="control-label" for="nome">Nome:</label>
-								<form:input type="text" name="nome" path="nome" id="nome" value="${produto.nome}" class="form-control" maxlength="50" size="50" />
+								<form:input type="text" name="nome" path="nome" id="nome" class="form-control" maxlength="50" size="50" />
 	                       		<font color="red"><form:errors path="nome" /></font><br/>
 	                        </div>
 	                        <div class="form-group">
 								<label class="control-label" for="nome">SKU:</label>
-								<form:input type="text" name="sku" path="sku" id="sku" value="${produto.sku}" class="form-control" maxlength="50" size="50" />
+								<form:input type="text" name="sku" path="sku" id="sku" class="form-control" maxlength="50" size="50" />
 								<font color="red"><form:errors path="sku" /></font><br/>
 							</div>
 							
+	                        <div class="form-group">
+								<label class="control-label" for="idCategoria">Categoria:</label>
+								<form:select path="categoriaModel.idCategoria" name="idCategoria" id="idCategoria">
+									<form:options items="${categorias}" itemValue="idCategoria" itemLabel="nomeCategoria"/>
+								</form:select>
+							</div>
 							<div class="form-group">
 								<label class="control-label" for="mesnagem">Descrição:</label>
-								<form:textarea id="descricao" class="form-control" path="descricao" value="${produto.descricao}" name="descricao" rows="4" cols="100"></form:textarea>
+								<form:textarea id="descricao" class="form-control" path="descricao" name="descricao" rows="4" cols="100"></form:textarea>
 								<font color="red"><form:errors path="descricao" /></font><br/>
 							</div>
 							
 							<div class="form-group">
 								<label class="control-label" for="preco">Preço:</label>
-								<form:input type="text" name="preco" path="preco" id="preco" value="${produto.preco}" class="form-control" maxlength="14" size="15" />
+								<form:input type="text" name="preco" path="preco" id="preco" class="form-control" maxlength="14" size="15" />
 								<font color="red"><form:errors path="preco" /></font><br/>
 							</div>
 							
